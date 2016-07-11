@@ -45,6 +45,9 @@ type check_sat_result =
 (** [declare_const solver x sort] runs the command [(declare-const x sort)] *)
 val declare_const : solver -> identifier -> sort -> unit
 
+(** [declare_sort solver x arity] runs the command [(declare-sort x arity)] *)
+val declare_sort : solver -> identifier -> int -> unit
+
 (** [assert_ solver term] runs the command [(assert term)] *)
 val assert_ : solver -> term -> unit
 
@@ -161,3 +164,6 @@ val command : solver -> sexp -> sexp
 
 (** [sexp_to_string sexp] returns the s-expressions as a string. *)
 val sexp_to_string : sexp -> string
+
+(** [fresh_name base] returns a fresh symbol given a base name. *)
+val fresh_name : string -> sexp

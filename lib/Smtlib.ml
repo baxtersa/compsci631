@@ -95,6 +95,21 @@ let sexp_to_string (sexp : sexp) : string =
   to_string sexp;
   contents buf
 
+module StringMap = Map.Make(String)
+
+let (_names :  int StringMap.t ref) =
+  ref StringMap.empty
+
+let fresh_name (base : string) : sexp =
+  try
+    let n = StringMap.find base !_names in
+    _names := StringMap.add base (n+1) !_names;
+    SSymbol (base ^ (string_of_int n))
+  with
+    Not_found ->
+    _names := StringMap.add base 1 !_names;
+    SSymbol (base ^ "0")
+
 type check_sat_result =
   | Sat
   | Unsat
@@ -153,6 +168,10 @@ let expect_success (solver : solver) (sexp : sexp) : unit =
 let declare_const (solver : solver) (id : identifier) (sort : sort) : unit =
   expect_success solver
     (SList [SSymbol "declare-const"; id_to_sexp id; sort_to_sexp sort])
+
+let declare_sort (solver : solver) (id : identifier) (arity : int) : unit =
+  expect_success solver
+    (SList [SSymbol "declare-sort"; id_to_sexp id; SInt arity])
 
 let assert_ (solver : solver) (term : term) : unit =
   expect_success solver (SList [SSymbol "assert"; term_to_sexp term])
