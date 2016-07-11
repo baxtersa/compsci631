@@ -169,6 +169,10 @@ let declare_const (solver : solver) (id : identifier) (sort : sort) : unit =
   expect_success solver
     (SList [SSymbol "declare-const"; id_to_sexp id; sort_to_sexp sort])
 
+let declare_fun (solver : solver) (id : identifier) (args : sort list) (sort : sort) : unit =
+  expect_success solver
+    (SList ([SSymbol "declare-fun"; id_to_sexp id] @ List.map (fun s -> sort_to_sexp s) (args @ [sort])))
+
 let declare_sort (solver : solver) (id : identifier) (arity : int) : unit =
   expect_success solver
     (SList [SSymbol "declare-sort"; id_to_sexp id; SInt arity])

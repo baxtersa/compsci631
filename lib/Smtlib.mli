@@ -45,6 +45,9 @@ type check_sat_result =
 (** [declare_const solver x sort] runs the command [(declare-const x sort)] *)
 val declare_const : solver -> identifier -> sort -> unit
 
+(** [declare_fun solver x sorts sort] runs the command [(declare-fun x sorts sort)] *)
+val declare_fun : solver -> identifier -> sort list -> sort -> unit
+
 (** [declare_sort solver x arity] runs the command [(declare-sort x arity)] *)
 val declare_sort : solver -> identifier -> int -> unit
 
