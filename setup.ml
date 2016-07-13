@@ -6960,7 +6960,8 @@ let setup_t =
                         [
                            FindlibPackage ("mparser", None);
                            FindlibPackage ("mparser.re", None);
-                           FindlibPackage ("ppx_deriving.std", None)
+                           FindlibPackage ("ppx_deriving.std", None);
+                           FindlibPackage ("ppx_jane", None)
                         ];
                       bs_build_tools =
                         [

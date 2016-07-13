@@ -15,7 +15,8 @@ Library compsci631
   BuildDepends:
     mparser,
     mparser.re,
-    ppx_deriving.std
+    ppx_deriving.std,
+    ppx_jane
   InternalModules:
     PL_util,
     Lexparse_util,

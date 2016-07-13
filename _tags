@@ -19,15 +19,18 @@ true: annot, bin_annot
 <lib/*.ml{,i,y}>: package(mparser)
 <lib/*.ml{,i,y}>: package(mparser.re)
 <lib/*.ml{,i,y}>: package(ppx_deriving.std)
+<lib/*.ml{,i,y}>: package(ppx_jane)
 # Executable testtool
 "tests/Main.byte": package(mparser)
 "tests/Main.byte": package(mparser.re)
 "tests/Main.byte": package(ppx_deriving.std)
 "tests/Main.byte": package(ppx_test)
+"tests/Main.byte": package(ppx_jane)
 "tests/Main.byte": use_compsci631
 <tests/*.ml{,i,y}>: package(mparser)
 <tests/*.ml{,i,y}>: package(mparser.re)
 <tests/*.ml{,i,y}>: package(ppx_deriving.std)
 <tests/*.ml{,i,y}>: package(ppx_test)
+<tests/*.ml{,i,y}>: package(ppx_jane)
 <tests/*.ml{,i,y}>: use_compsci631
 # OASIS_STOP
