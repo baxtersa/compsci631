@@ -22,7 +22,7 @@ val make_solver : string -> solver
 
 
 type identifier =
-  | Id of string
+  | Id of string [@@deriving sexp, compare]
 
 type sort =
   | Sort of identifier
@@ -35,7 +35,7 @@ type term =
   | BitVec of int * int
   | Const of identifier
   | App of identifier * term list
-  | Let of string * term * term
+  | Let of string * term * term [@@deriving sexp, compare]
 
 type check_sat_result =
   | Sat
@@ -168,6 +168,9 @@ type sexp = Smtlib_syntax.sexp =
 
 (** [command solver sexp] sends a command to the solver and reads a response. *)
 val command : solver -> sexp -> sexp
+
+(** [term_to_sexp term] returns the term as an s-expression. *)
+val term_to_sexp : term -> sexp
 
 (** [sexp_to_string sexp] returns the s-expressions as a string. *)
 val sexp_to_string : sexp -> string

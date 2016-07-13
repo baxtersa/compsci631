@@ -1,3 +1,5 @@
+open Sexplib.Std
+
 include Smtlib_syntax
 
 type solver = { stdin : out_channel; stdout : in_channel; stdout_lexbuf : Lexing.lexbuf }
@@ -116,7 +118,7 @@ type check_sat_result =
   | Unknown
 
 type identifier =
-  | Id of string
+  | Id of string [@@deriving sexp, compare]
 
 type sort =
   | Sort of identifier
@@ -129,7 +131,7 @@ type term =
   | BitVec of int * int
   | Const of identifier
   | App of identifier * term list
-  | Let of string * term * term
+  | Let of string * term * term [@@deriving sexp, compare]
 
 let id_to_sexp (id : identifier) : sexp = match id with
   | Id x -> SSymbol x
@@ -199,8 +201,10 @@ let get_model (solver : solver) : (identifier * term) list =
   | sexp -> failwith ("expected model, got " ^ (sexp_to_string sexp))
 
 let get_one_value (solver : solver) (e : term) : term =
-  match command solver (SList [SSymbol "get-value"; term_to_sexp e]) with
-  | SList [SSymbol _; x] -> sexp_to_term x
+  let res = command solver
+      (SList [SSymbol "get-value"; SList [term_to_sexp e]]) in
+  match res with
+  | SList [SList [_; x]] -> sexp_to_term x
   | sexp -> failwith ("expected a single pair, got " ^
                       (sexp_to_string sexp))
 
