@@ -198,6 +198,11 @@ let get_model (solver : solver) : (identifier * term) list =
   | SList (SSymbol "model" :: alist) -> read_model alist
   | sexp -> failwith ("expected model, got " ^ (sexp_to_string sexp))
 
+let get_one_value (solver : solver) (e : term) : term =
+  match command solver (SList [SSymbol "get-value"; term_to_sexp e]) with
+  | SList [SSymbol _; x] -> sexp_to_term x
+  | sexp -> failwith ("expected a single pair, got " ^
+                      (sexp_to_string sexp))
 
 let push (solver : solver) = expect_success solver (SList [SSymbol "push"])
 let pop (solver : solver) = expect_success solver (SList [SSymbol "pop"])

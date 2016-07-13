@@ -57,7 +57,11 @@ val assert_ : solver -> term -> unit
 (** [check_sat solver] runs the command [(check-sat)] *)
 val check_sat : solver -> check_sat_result
 
+(** [get_model solver] runs the command [(get-model)] *)
 val get_model : solver -> (identifier * term) list
+
+(** [get_one_value solver e] runs the command [(get-value e)] *)
+val get_one_value : solver -> term -> term
 
 (** [push solver] runs the command [(push)] *)
 val push : solver -> unit
